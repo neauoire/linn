@@ -7,11 +7,32 @@ serialosc.start()
 
 let grid = null
 
+function noteAt (i) {
+  return { n: 'C', l: 0 }
+}
+
+function posAt (i) {
+  return { x: i % 16, y: Math.floor(i / 16) }
+}
+
+function idAt (x, y) {
+  return (y * 16) + x
+}
+
+function initDevice () {
+  for (let i = 0; i < 128; i++) {
+    const pos = posAt(i)
+    const light = noteAt(i).l
+    grid.set(pos.x, pos.y, light)
+  }
+}
+
 function selectDevice (device) {
   grid = device
   grid.all(0)
   grid.on('key', onKey)
   console.log('Selected: ' + device.model)
+  initDevice()
 }
 
 function onKey (data) {
@@ -19,6 +40,8 @@ function onKey (data) {
 }
 
 function onKeyDown (x, y) {
+  const note = noteAt(idAt(x, y))
+  console.log(note)
   grid.set(x, y, 1)
   output.send('noteon', { note: 64, velocity: 127, channel: 3 })
 }
