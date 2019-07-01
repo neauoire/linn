@@ -6,7 +6,7 @@ An implementation of the [LinnStrument keyboard layout](http://www.rogerlinndesi
 
 ## Setup
 
-You must have [serialosc](https://monome.org/docs/setup/) and [nodeJS](https://nodejs.org) installed.
+You must have [serialosc](https://monome.org/docs/setup/) and [node](https://nodejs.org) installed.
 
 ```
 npm install
