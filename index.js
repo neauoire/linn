@@ -24,6 +24,8 @@ const notes = [
   'F0#', 'G0', 'G0#', 'A0', 'A0#', 'B0', 'C1', 'C1#', 'D1', 'D1#', 'E1', 'F1', 'F1#', 'G1', 'G1#', 'A1'
 ]
 
+console.log(`Welcome to ${name}, press any key to stop.`)
+
 serialosc.start()
 
 // Utils
@@ -110,5 +112,5 @@ process.stdin.on('keypress', (str, key) => {
   console.log('Closing..')
   grid.all(0)
   output.close()
-  setTimeout(close, 1000)
+  setTimeout(close, 500)
 })
