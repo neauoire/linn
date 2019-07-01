@@ -7,6 +7,7 @@ serialosc.start()
 
 let channel = 1
 let grid = null
+let fn = false
 
 let keys = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
 
@@ -65,12 +66,17 @@ function onKeyDown (x, y) {
   grid.levelSet(x, y, 10)
   output.send('noteon', { note: note.v, velocity: 127, channel: channel })
   console.log(`${(note.i + '').padStart(3, ' ')} | ${(note.p + '').padStart(3, ' ')} | ${(note.v + '').padStart(3, ' ')} | ch:${(channel + '').padStart(3, ' ')}`)
+  if (fn && idAt(x, y) < 16) {
+    channel = idAt(x, y)
+  }
+  fn = note.i === 127
 }
 
 function onKeyUp (x, y) {
   const note = noteAt(idAt(x, y))
   grid.levelSet(x, y, note.l)
   output.send('noteoff', { note: note.v, velocity: 127, channel: channel })
+  fn = false
 }
 
 serialosc.on('device:add', selectDevice)

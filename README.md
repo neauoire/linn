@@ -13,6 +13,10 @@ npm install
 node start
 ```
 
+## Channel
+
+By default, the linn monome will send to **Channel 0**, you can change channel by holding down the last key(bottom right), and pressing one of the 16 keys of the top row.
+
 ## Layout
 
 ```
