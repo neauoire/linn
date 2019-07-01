@@ -10,7 +10,7 @@ You must have [serialosc](https://monome.org/docs/setup/) and [node](https://nod
 
 ```
 npm install
-node start
+node index
 ```
 
 ## Channel
