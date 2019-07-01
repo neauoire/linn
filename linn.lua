@@ -10,7 +10,7 @@
 local g
 local viewport = { width = 128, height = 64, frame = 0 }
 local focus = { x = 1, y = 1, brightness = 15 }
-
+local midi_signal_out
 local keys = { 'C','C#','D','D#','E','F','F#','G','G#','A','A#','B' }
 
 local notes = {
@@ -47,8 +47,7 @@ end
 function connect()
   g = grid.connect()
   g.key = on_grid_key
-  g.add = on_grid_add
-  g.remove = on_grid_remove
+  midi_signal_out = midi.connect(1)
 end
 
 function is_connected()
@@ -96,19 +95,11 @@ end
 function on_grid_key_down(x,y)
   focus.x = x
   focus.y = y
+  midi_signal_out:note_on(note_at(id_at(x,y)).v,127)
 end
 
 function on_grid_key_up(x,y)
-  focus.x = -1
-  focus.y = -1
-end
-
-function on_grid_add(g)
-  print('on_add')
-end
-
-function on_grid_remove(g)
-  print('on_remove')
+  midi_signal_out:note_off(note_at(id_at(x,y)).v,127)
 end
 
 function update()
@@ -147,12 +138,12 @@ end
 
 function draw_pixel(x,y)
   if focus.x == x and focus.y == y then
-    screen.stroke()
+    screen.fill()
     screen.level(15)
   end
   screen.pixel((x*offset.spacing) + offset.x, (y*offset.spacing) + offset.y)
   if focus.x == x and focus.y == y then
-    screen.stroke()
+    screen.fill()
     screen.level(1)
   end
 end
@@ -166,18 +157,18 @@ function draw_grid()
       draw_pixel(x,y)
     end
   end
-  screen.stroke()
+  screen.fill()
 end
 
 function draw_label()
   screen.level(15)
   local line_height = 8
-  screen.move(5,viewport.height - (line_height * 1))
+  screen.move(34,viewport.height - (line_height * 1))
   if is_connected() ~= true then
     screen.text('Grid is not connected.')
   elseif focus.x > -1 and focus.y > -1 then
     note = note_at(id_at(focus.x,focus.y))
-    screen.text(focus.x..','..focus.y..' '..note.p..''..note.o..' '..note.v)
+    screen.text(note.p..''..note.o..' '..note.v)
   end
   screen.stroke()
 end
