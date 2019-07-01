@@ -1,0 +1,23 @@
+{
+  "name": "linn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neauoire/linn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neauoire/linn/issues"
+  },
+  "homepage": "https://github.com/neauoire/linn#readme",
+  "dependencies": {
+    "easymidi": "^1.0.1",
+    "serialosc": "0.0.8"
+  }
+}
