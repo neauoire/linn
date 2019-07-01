@@ -6,6 +6,8 @@ This tiny console script will create a new virtual instrument called **Linn Mono
 
 ## Setup
 
+You must have [serialosc](https://monome.org/docs/setup/) installed.
+
 ```
 npm install
 node start
