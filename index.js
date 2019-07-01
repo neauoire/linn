@@ -72,7 +72,6 @@ function onKeyDown (x, y) {
   }
   fn = note.i === 127
   last = note.p
-  redraw()
 }
 
 function onKeyUp (x, y) {
@@ -84,7 +83,6 @@ function onKeyUp (x, y) {
   if (down < 1) {
     last = null
   }
-  redraw()
 }
 
 function close () {
