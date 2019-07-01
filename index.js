@@ -5,6 +5,7 @@ const output = new easymidi.Output('Linn Monome', true)
 
 serialosc.start()
 
+let channel = 1
 let grid = null
 
 let keys = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
@@ -26,8 +27,9 @@ function noteAt (i) {
   const o = parseInt(n.substr(1, 1)) + 2
   const s = n.indexOf('#') > -1
   const l = s ? 0 : k === 'C' ? 15 : 5
-  const v = keys.indexOf(k) + (o * 12)
-  return { i, k, o, s, l, v }
+  const p = k + '' + (s ? '#' : '')
+  const v = keys.indexOf(p) + (o * 12)
+  return { i, k, o, s, l, v, p }
 }
 
 function posAt (i) {
@@ -61,13 +63,14 @@ function onKey (data) {
 function onKeyDown (x, y) {
   const note = noteAt(idAt(x, y))
   grid.levelSet(x, y, 10)
-  output.send('noteon', { note: note.v, velocity: 127, channel: 3 })
+  output.send('noteon', { note: note.v, velocity: 127, channel: channel })
+  console.log(`${(note.i + '').padStart(3, ' ')} | ${(note.p + '').padStart(3, ' ')} | ${(note.v + '').padStart(3, ' ')} | ch:${(channel + '').padStart(3, ' ')}`)
 }
 
 function onKeyUp (x, y) {
   const note = noteAt(idAt(x, y))
   grid.levelSet(x, y, note.l)
-  output.send('noteoff', { note: note.v, velocity: 127, channel: 3 })
+  output.send('noteoff', { note: note.v, velocity: 127, channel: channel })
 }
 
 serialosc.on('device:add', selectDevice)
