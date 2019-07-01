@@ -1,17 +1,30 @@
+
+const name = 'Linn Monome'
+
+const readline = require('readline')
 const easymidi = require('easymidi')
 const serialosc = require('serialosc')
 
-const output = new easymidi.Output('Linn Monome', true)
+console.log(`Creating ${name}..`)
+
+const output = new easymidi.Output(name, true)
+
+console.log(`Starting serialosc..`)
 
 serialosc.start()
+
+console.log('Waiting..')
+console.log('Press any key to stop.')
+
+//
 
 let channel = 1
 let grid = null
 let fn = false
 
-let keys = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
+const keys = ['C', 'c', 'D', 'd', 'E', 'F', 'f', 'G', 'g', 'A', 'a', 'B']
 
-let notes = [
+const notes = [
   'F3', 'F3#', 'G3', 'G3#', 'A3', 'A3#', 'B3', 'C4', 'C4#', 'D4', 'D4#', 'E4', 'F4', 'F4#', 'G4', 'G4#',
   'C3', 'C3#', 'D3', 'D3#', 'E3', 'F3', 'F3#', 'G3', 'G3#', 'A3', 'A3#', 'B3', 'C4', 'C4#', 'D4', 'D4#',
   'G2', 'G2#', 'A2', 'A2#', 'B2', 'C3', 'C3#', 'D3', 'D3#', 'E3', 'F3', 'F3#', 'G3', 'G3#', 'A3', 'A3#',
@@ -19,7 +32,7 @@ let notes = [
   'A1', 'A1#', 'B1', 'C3', 'C2#', 'D2', 'D2#', 'E2', 'F2', 'F2#', 'G2', 'G2#', 'A2', 'A2#', 'B2', 'C3',
   'E1', 'F1', 'F1#', 'G1', 'G1#', 'A1', 'A1#', 'B1', 'C2', 'C2#', 'D2', 'D2#', 'E2', 'F2', 'F2#', 'G2',
   'B0', 'C1', 'C1#', 'D1', 'D1#', 'E1', 'F1', 'F1#', 'G1', 'G1#', 'A1', 'A1#', 'B1', 'C2', 'C2#', 'D2',
-  'F0#', 'G0', 'G0#', 'A0', 'A0#', 'B0', 'C1', 'C1#', 'D1', 'D1#', 'E1', 'F1', 'F1#', 'G1', 'G1#', 'A1',
+  'F0#', 'G0', 'G0#', 'A0', 'A0#', 'B0', 'C1', 'C1#', 'D1', 'D1#', 'E1', 'F1', 'F1#', 'G1', 'G1#', 'A1'
 ]
 
 function noteAt (i) {
@@ -47,13 +60,14 @@ function initDevice () {
     const light = noteAt(i).l
     grid.levelSet(pos.x, pos.y, light)
   }
+  console.log('Ready.')
 }
 
 function selectDevice (device) {
   grid = device
   grid.all(0)
   grid.on('key', onKey)
-  console.log('Selected: ' + device.model)
+  console.log(`Selecting ${device.model}(${device.sizeX}x${device.sizeY}) ${device.id}..`)
   initDevice()
 }
 
@@ -79,10 +93,24 @@ function onKeyUp (x, y) {
   fn = false
 }
 
+function close () {
+  console.log('Done.')
+  process.exit()
+}
+
+// Ready
+
 serialosc.on('device:add', selectDevice)
 
-process.on('SIGHUP', function () {
-  console.log('About to exit')
+// Quit
+
+readline.emitKeypressEvents(process.stdin)
+
+process.stdin.setRawMode(true)
+
+process.stdin.on('keypress', (str, key) => {
+  console.log('Closing..')
+  grid.all(0)
   output.close()
-  process.exit()
+  setTimeout(close, 1000)
 })
