@@ -1,6 +1,6 @@
 # linn
 
-An implementation of the LinnStrument keyboard layout for the **Monome 128**. This tiny console script will create a new virtual instrument called **Linn Monome** to use with your DAW. You can follow the discussion [here](https://llllllll.co/t/using-a-grid-as-linnstrument/23637).
+An implementation of the [LinnStrument keyboard layout](http://www.rogerlinndesign.com/linnstrument.html) for the **Monome 128**. This tiny console script will create a new virtual instrument called **Linn Monome** to use with your DAW. You can follow the discussion [here](https://llllllll.co/t/using-a-grid-as-linnstrument/23637).
 
 <img src='https://raw.githubusercontent.com/neauoire/linn/master/PREVIEW.jpg' width='600'/>
 
