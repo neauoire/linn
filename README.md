@@ -6,12 +6,27 @@ An implementation of the [LinnStrument keyboard layout](http://www.rogerlinndesi
 
 ## Setup
 
-You must have [serialosc](https://monome.org/docs/setup/) and [node](https://nodejs.org) installed.
+### Requirements
 
-```
-npm install
-node index
-```
+- install [git](https://hackernoon.com/install-git-on-mac-a884f0c9d32c), or check with `git -v`
+- install [nodeJS](https://nodejs.org/en/), or check with `npm -v`
+- install [monome drivers](https://monome.org/docs/setup/), and reboot.
+
+### Install
+
+- Open the terminal
+- type `cd Documents`
+- type `git clone https://github.com/neauoire/linn.git`
+- type `cd linn`
+- type `npm install`
+- type `node index`
+
+### Whenever you want to use it
+
+- type `cd Documents/linn`
+- type `node index`
+
+Enjoy :)
 
 ## Channel
 
