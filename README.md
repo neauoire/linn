@@ -18,7 +18,7 @@ An implementation of the [LinnStrument keyboard layout](http://www.rogerlinndesi
 - type `cd Documents`
 - type `git clone https://github.com/neauoire/linn.git`
 - type `cd linn`
-- type `npm install`
+- type `sudo npm install`
 - type `node index`
 
 ### Whenever you want to use it
